@@ -10,5 +10,5 @@ def plot_progress(progress_dict: dict[datetime, float], title: str):
     plt.plot(x, y)  # type: ignore[arg-type]
     plt.title(title)
     plt.xlabel("Date")
-    plt.ylabel("e1RM")
+    plt.ylabel("e1RM (kg)")
     plt.show()
