@@ -18,17 +18,10 @@ plt.rcParams.update(TOKYO_NIGHT)  # type: ignore[arg-type]
 
 
 def plot_progress(progress_dict: dict[datetime, float], title: str):
-    # plt.plot(x, y, marker="o", color="#7aa2f7", markerfacecolor="#bb9af7")  # type: ignore[arg-type]
-    # plt.title(title)
-    # plt.xlabel("Date")
-    # plt.ylabel("e1RM (kg)")
-    # plt.grid(True)
-    # plt.show()
-
     x = list(progress_dict.keys())
     y = list(progress_dict.values())
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(x, y, marker="o", color="#7aa2f7", markerfacecolor="#bb0af7", linewidth=2)  # type: ignore
+    ax.plot(x, y, marker="o", color="#7aa2f7", markerfacecolor="#bb9af7", linewidth=2)  # type: ignore
     ax.set_title(title)
     ax.set_xlabel("Date")
     ax.set_ylabel("e1RM (kg)")
