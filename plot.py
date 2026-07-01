@@ -21,11 +21,30 @@ def plot_progress(progress_dict: dict[datetime, float], title: str):
     x = list(progress_dict.keys())
     y = list(progress_dict.values())
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(x, y, marker="o", color="#7aa2f7", markerfacecolor="#bb9af7", linewidth=2)  # type: ignore
+    ax.plot(x, y, marker="o", markerfacecolor="#bb9af7", linewidth=2)  # type: ignore
     ax.set_title(title)
     ax.set_xlabel("Date")
     ax.set_ylabel("e1RM (kg)")
     ax.grid(True)
+
+    fig.autofmt_xdate()
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_multiple(progress_dicts: dict[str, dict[datetime, float]]):
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    for exercise, progress_dict in progress_dicts.items():
+        x = list(progress_dict.keys())
+        y = list(progress_dict.values())
+        ax.plot(x, y, marker="o", linewidth=2, label=exercise)  #
+
+    ax.set_title("Progress")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("e1RM (kg)")
+    ax.grid(True)
+    ax.legend()
 
     fig.autofmt_xdate()
     fig.tight_layout()

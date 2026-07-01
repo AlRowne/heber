@@ -1,19 +1,15 @@
+from datetime import datetime
 from typing import Annotated
 
 import questionary
 import typer
-from prompt_toolkit.shortcuts.prompt import CompleteStyle
-from rich import print
 
 from analysis import group_by_exercise, progress_for_exercise
 from loader import load_sets
-from plot import plot_progress
+from plot import plot_multiple
 
 style = questionary.Style(
     [
-        ("completion-menu.completion", "bg:#292e42"),
-        ("completion-menu.completion.current", "bg:#7aa2f7 #1a1b26 bold"),
-        ("completion-menu.meta.completion", "bg:#414868 #a9b1d6"),
         ("scrollbar.button", "bg:#565f89"),
         ("scrollbar.background", "bg:#414868"),
         ("qmark", "#7aa2f7 bold"),
@@ -32,19 +28,20 @@ def main(
     workout_dict = group_by_exercise(workout_sets)
     list_of_exercises = sorted(workout_dict)
 
-    exercise = questionary.autocomplete(
+    exercises = questionary.checkbox(
         "Which exercise do you want to visualize?",
         choices=list_of_exercises,
-        validate=lambda x: x in list_of_exercises,
-        complete_style=CompleteStyle.MULTI_COLUMN,
         style=style,
     ).ask()
 
-    if exercise is None:
+    if not exercises:
         raise typer.Exit(1)
 
-    progress = progress_for_exercise(workout_dict, exercise)
-    plot_progress(progress, f"{exercise} Progress")
+    progress_dicts: dict[str, dict[datetime, float]] = {}
+    for e in exercises:
+        progress_dicts[e] = progress_for_exercise(workout_dict, e)
+
+    plot_multiple(progress_dicts)
 
 
 if __name__ == "__main__":
