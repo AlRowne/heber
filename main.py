@@ -6,7 +6,7 @@ import typer
 
 from analysis import group_by_exercise, progress_for_exercise
 from loader import load_sets
-from plot import plot_multiple_axes, plot_single_ax
+from plot import plot_grid, plot_single
 
 style = questionary.Style(
     [
@@ -26,20 +26,32 @@ def main(
     list_of_exercises = sorted(workout_dict)
 
     exercises = questionary.checkbox(
-        "Which exercise do you want to visualize?",
+        "Which exercise(s) do you want to visualize?",
         choices=list_of_exercises,
         style=style,
     ).ask()
-
     if not exercises:
+        raise typer.Exit(1)
+
+    plot_style = questionary.select(
+        "Which plot style do you want to show?",
+        choices=[
+            questionary.Choice(title="Single Axis (overlay)", value="single"),
+            questionary.Choice(title="Grid (one per exercise)", value="grid"),
+        ],
+        style=style,
+    ).ask()
+    if plot_style is None:
         raise typer.Exit(1)
 
     progress_dicts: dict[str, dict[datetime, float]] = {}
     for e in exercises:
         progress_dicts[e] = progress_for_exercise(workout_dict, e)
 
-    # plot_single_ax(progress_dicts)
-    plot_multiple_axes(progress_dicts)
+    if plot_style == "single":
+        plot_single(progress_dicts)
+    elif plot_style == "grid":
+        plot_grid(progress_dicts)
 
 
 if __name__ == "__main__":

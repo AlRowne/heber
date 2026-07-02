@@ -18,7 +18,7 @@ TOKYO_NIGHT = {
 plt.rcParams.update(TOKYO_NIGHT)  # type: ignore[arg-type]
 
 
-def plot_single_ax(progress_dicts: dict[str, dict[datetime, float]]):
+def plot_single(progress_dicts: dict[str, dict[datetime, float]]):
     fig, ax = plt.subplots(figsize=(12, 6))
 
     for exercise, progress_dict in progress_dicts.items():
@@ -37,7 +37,7 @@ def plot_single_ax(progress_dicts: dict[str, dict[datetime, float]]):
     plt.show()
 
 
-def plot_multiple_axes(progress_dicts: dict[str, dict[datetime, float]]):
+def plot_grid(progress_dicts: dict[str, dict[datetime, float]]):
     n = len(progress_dicts)
     ncols = 1 if n == 1 else 2
     nrows = math.ceil(n / ncols)
