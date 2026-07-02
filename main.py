@@ -6,7 +6,7 @@ import typer
 
 from analysis import group_by_exercise, progress_for_exercise
 from loader import load_sets
-from plot import plot_multiple
+from plot import plot_multiple_axes, plot_single_ax
 
 style = questionary.Style(
     [
@@ -38,7 +38,8 @@ def main(
     for e in exercises:
         progress_dicts[e] = progress_for_exercise(workout_dict, e)
 
-    plot_multiple(progress_dicts)
+    # plot_single_ax(progress_dicts)
+    plot_multiple_axes(progress_dicts)
 
 
 if __name__ == "__main__":

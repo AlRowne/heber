@@ -17,7 +17,7 @@ TOKYO_NIGHT = {
 plt.rcParams.update(TOKYO_NIGHT)  # type: ignore[arg-type]
 
 
-def plot_multiple(progress_dicts: dict[str, dict[datetime, float]]):
+def plot_single_ax(progress_dicts: dict[str, dict[datetime, float]]):
     fig, ax = plt.subplots(figsize=(12, 6))
 
     for exercise, progress_dict in progress_dicts.items():
@@ -32,5 +32,26 @@ def plot_multiple(progress_dicts: dict[str, dict[datetime, float]]):
     ax.legend()
 
     fig.autofmt_xdate()
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_multiple_axes(progress_dicts: dict[str, dict[datetime, float]]):
+    fig, axes = plt.subplots(2, 2)
+
+    print(axes)
+    print(axes.flatten())
+
+    for ax, (exercise, progress_dict) in zip(axes.flatten(), progress_dicts.items()):
+        x = list(progress_dict.keys())
+        y = list(progress_dict.values())
+
+        ax.plot(x, y, marker="o", label=exercise)
+        ax.set_xlabel("Date")
+        ax.set_ylabel("e1RM (kg)")
+        ax.grid(True)
+        ax.legend()
+        ax.tick_params(axis="x", rotation=45)
+
     fig.tight_layout()
     plt.show()
