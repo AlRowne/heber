@@ -1,3 +1,4 @@
+import math
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -37,7 +38,11 @@ def plot_single_ax(progress_dicts: dict[str, dict[datetime, float]]):
 
 
 def plot_multiple_axes(progress_dicts: dict[str, dict[datetime, float]]):
-    fig, axes = plt.subplots(2, 2)
+    n = len(progress_dicts)
+    ncols = 1 if n == 1 else 2
+    nrows = math.ceil(n / ncols)
+
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, squeeze=False)
 
     print(axes)
     print(axes.flatten())
@@ -47,11 +52,14 @@ def plot_multiple_axes(progress_dicts: dict[str, dict[datetime, float]]):
         y = list(progress_dict.values())
 
         ax.plot(x, y, marker="o", label=exercise)
+        ax.set_title(exercise)
         ax.set_xlabel("Date")
         ax.set_ylabel("e1RM (kg)")
         ax.grid(True)
-        ax.legend()
         ax.tick_params(axis="x", rotation=45)
+
+    for ax in axes.flatten()[n:]:
+        ax.set_visible(False)
 
     fig.tight_layout()
     plt.show()
