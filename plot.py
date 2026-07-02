@@ -44,9 +44,6 @@ def plot_multiple_axes(progress_dicts: dict[str, dict[datetime, float]]):
 
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, squeeze=False)
 
-    print(axes)
-    print(axes.flatten())
-
     for ax, (exercise, progress_dict) in zip(axes.flatten(), progress_dicts.items()):
         x = list(progress_dict.keys())
         y = list(progress_dict.values())
