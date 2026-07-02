@@ -10,13 +10,10 @@ from plot import plot_multiple
 
 style = questionary.Style(
     [
-        ("scrollbar.button", "bg:#565f89"),
-        ("scrollbar.background", "bg:#414868"),
         ("qmark", "#7aa2f7 bold"),
         ("question", "#c0caf5 bold"),
-        ("answer", "#c0caf5 bold"),
-        ("selected", "fg:#1a1b26 bold"),
-        ("pointer", "#bb9af7"),
+        ("selected", "#2ac3de bold"),
+        ("pointer", "#bb9af7 bold"),
     ]
 )
 
